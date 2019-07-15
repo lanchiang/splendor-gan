@@ -20,7 +20,9 @@ public class GemstonePool {
 
     private GoldJoker[] goldJokers;
 
-    public GemstonePool(int playerNumber) {
+    private static GemstonePool instance;
+
+    private GemstonePool(int playerNumber) {
         goldJokers = new GoldJoker[5]; // there are always five gold jokers.
         switch (playerNumber) {
             case 2:
@@ -35,6 +37,13 @@ public class GemstonePool {
             default:
                 throw new IllegalArgumentException("Player number is incorrect.");
         }
+    }
+
+    public static GemstonePool getInstance(int playerNumber) {
+        if (instance == null) {
+            instance = new GemstonePool(playerNumber);
+        }
+        return instance;
     }
 
     private void initPool(int numOfBasicGemstone) {

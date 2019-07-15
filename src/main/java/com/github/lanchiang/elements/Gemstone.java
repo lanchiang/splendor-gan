@@ -6,7 +6,7 @@ package com.github.lanchiang.elements;
  * @author Lan Jiang
  * @since 2019-07-15
  */
-abstract class Gemstone {
+abstract public class Gemstone {
 
 }
 
