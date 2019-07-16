@@ -11,10 +11,11 @@ import java.io.IOException;
  */
 public class XmlDeserializer {
 
-    private XmlMapper xmlMapper = new XmlMapper();
+    private XmlDeserializer() {}
 
-    public <T> T createPojoObject(String fileName, final Class<T> xmlClass) {
+    public static <T> T createPojoObject(String fileName, final Class<T> xmlClass) {
         T pojo = null;
+        XmlMapper xmlMapper = new XmlMapper();
         try {
             pojo = xmlMapper.readValue(new File(fileName), xmlClass);
         } catch (IOException e) {
