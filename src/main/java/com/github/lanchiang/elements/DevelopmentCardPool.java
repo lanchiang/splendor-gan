@@ -26,7 +26,7 @@ public class DevelopmentCardPool {
                 new DevelopmentCard(
                         developmentCardPojo.getLevel(),
                         developmentCardPojo.getPrestige(),
-                        Gemstone.createGemstoneInstance(developmentCardPojo.getBenefit()),
+                        Gemstone.getGemstone(developmentCardPojo.getBenefit()),
                         developmentCardPojo.getGemstoneCostPojo().getEmerald(),
                         developmentCardPojo.getGemstoneCostPojo().getDiamond(),
                         developmentCardPojo.getGemstoneCostPojo().getSapphire(),

@@ -20,10 +20,10 @@ public class NobleTile {
     public NobleTile(int emeraldCost, int diamondCost, int sapphireCost, int onyxCost, int rubyCost) {
         costs = new HashMap<>();
 
-        costs.putIfAbsent(new Emerald(), emeraldCost);
-        costs.putIfAbsent(new Diamond(), diamondCost);
-        costs.putIfAbsent(new Sapphire(), sapphireCost);
-        costs.putIfAbsent(new Onyx(), onyxCost);
-        costs.putIfAbsent(new Ruby(), rubyCost);
+        costs.putIfAbsent(Gemstone.Emerald, emeraldCost);
+        costs.putIfAbsent(Gemstone.Diamond, diamondCost);
+        costs.putIfAbsent(Gemstone.Sapphire, sapphireCost);
+        costs.putIfAbsent(Gemstone.Onyx, onyxCost);
+        costs.putIfAbsent(Gemstone.Ruby, rubyCost);
     }
 }

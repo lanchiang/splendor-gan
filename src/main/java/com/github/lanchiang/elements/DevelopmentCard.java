@@ -34,10 +34,10 @@ public class DevelopmentCard {
         this.benefit = benefit;
 
         this.costs = new HashMap<>();
-        this.costs.putIfAbsent(new Emerald(), emeraldCost);
-        this.costs.putIfAbsent(new Diamond(), diamondCost);
-        this.costs.putIfAbsent(new Sapphire(), sapphireCost);
-        this.costs.putIfAbsent(new Onyx(), onyxCost);
-        this.costs.putIfAbsent(new Ruby(), rubyCost);
+        this.costs.putIfAbsent(Gemstone.Emerald, emeraldCost);
+        this.costs.putIfAbsent(Gemstone.Diamond, diamondCost);
+        this.costs.putIfAbsent(Gemstone.Sapphire, sapphireCost);
+        this.costs.putIfAbsent(Gemstone.Onyx, onyxCost);
+        this.costs.putIfAbsent(Gemstone.Ruby, rubyCost);
     }
 }
