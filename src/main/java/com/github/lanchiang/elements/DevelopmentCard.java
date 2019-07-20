@@ -1,5 +1,8 @@
 package com.github.lanchiang.elements;
 
+import lombok.Getter;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -8,21 +11,33 @@ import java.util.Map;
  */
 public class DevelopmentCard {
 
-    private Level cardLevel;
+    @Getter
+    private int cardLevel;
 
+    @Getter
     private Map<Gemstone, Integer> costs;
 
     /**
      * The prestige points provided by this development card.
      */
-    private Integer prestigePoints;
+    @Getter private int prestigePoints;
 
     /**
      * The benefit given by owning this {@link Gemstone}
      */
-    private Gemstone benefit;
+    @Getter private Gemstone benefit;
 
-    public enum Level {
-        One, Two, Three
+    public DevelopmentCard(int cardLevel, int prestigePoints, Gemstone benefit,
+                           int emeraldCost, int diamondCost, int sapphireCost, int onyxCost, int rubyCost) {
+        this.cardLevel = cardLevel;
+        this.prestigePoints = prestigePoints;
+        this.benefit = benefit;
+
+        this.costs = new HashMap<>();
+        this.costs.putIfAbsent(new Emerald(), emeraldCost);
+        this.costs.putIfAbsent(new Diamond(), diamondCost);
+        this.costs.putIfAbsent(new Sapphire(), sapphireCost);
+        this.costs.putIfAbsent(new Onyx(), onyxCost);
+        this.costs.putIfAbsent(new Ruby(), rubyCost);
     }
 }

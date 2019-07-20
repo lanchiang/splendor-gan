@@ -8,6 +8,21 @@ package com.github.lanchiang.elements;
  */
 abstract public class Gemstone {
 
+    public static Gemstone createGemstoneInstance(String name) {
+        if (name.equals("emerald")) {
+            return new Emerald();
+        } else if (name.equals("diamond")) {
+            return new Diamond();
+        } else if (name.equals("sapphire")) {
+            return new Sapphire();
+        } else if (name.equals("onyx")) {
+            return new Onyx();
+        } else if (name.equals("ruby")) {
+            return new Ruby();
+        } else {
+            throw new IllegalArgumentException("Gemstone name is not correct in the resource file");
+        }
+    }
 }
 
 class Emerald extends Gemstone {}

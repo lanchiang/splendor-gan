@@ -1,5 +1,6 @@
 package com.github.lanchiang.pojo;
 
+import com.github.lanchiang.elements.DevelopmentCardPool;
 import org.junit.Test;
 
 /**
@@ -10,7 +11,7 @@ public class DevelopmentCardsPojoTest {
 
     @Test
     public void testLoadXml() {
-        DevelopmentCardPoolPojo xml = XmlDeserializer.createPojoObject(getClass().getClassLoader().getResource("development-cards.xml").getPath(), DevelopmentCardPoolPojo.class);
+        DevelopmentCardPool developmentCardPool = DevelopmentCardPool.getInstance();
         return;
     }
 }

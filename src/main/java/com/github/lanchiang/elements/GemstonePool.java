@@ -1,5 +1,7 @@
 package com.github.lanchiang.elements;
 
+import lombok.Getter;
+
 /**
  * This gemstone pool maintains the unoccupied gemstones.
  *
@@ -8,22 +10,28 @@ package com.github.lanchiang.elements;
  */
 public class GemstonePool {
 
-    private Emerald[] emeralds;
+    @Getter
+    private int emeralds;
 
-    private Diamond[] diamonds;
+    @Getter
+    private int diamonds;
 
-    private Sapphire[] sapphires;
+    @Getter
+    private int sapphires;
 
-    private Onyx[] onyxes;
+    @Getter
+    private int onyxes;
 
-    private Ruby[] rubies;
+    @Getter
+    private int rubies;
 
-    private GoldJoker[] goldJokers;
+    @Getter
+    private int goldJokers;
 
     private static GemstonePool instance;
 
     private GemstonePool(int playerNumber) {
-        goldJokers = new GoldJoker[5]; // there are always five gold jokers.
+        goldJokers = 5; // there are always five gold jokers.
         switch (playerNumber) {
             case 2:
                 initPool(4);
@@ -47,10 +55,10 @@ public class GemstonePool {
     }
 
     private void initPool(int numOfBasicGemstone) {
-        emeralds = new Emerald[numOfBasicGemstone];
-        diamonds = new Diamond[numOfBasicGemstone];
-        sapphires = new Sapphire[numOfBasicGemstone];
-        onyxes = new Onyx[numOfBasicGemstone];
-        rubies = new Ruby[numOfBasicGemstone];
+        emeralds = numOfBasicGemstone;
+        diamonds = numOfBasicGemstone;
+        sapphires = numOfBasicGemstone;
+        onyxes = numOfBasicGemstone;
+        rubies = numOfBasicGemstone;
     }
 }

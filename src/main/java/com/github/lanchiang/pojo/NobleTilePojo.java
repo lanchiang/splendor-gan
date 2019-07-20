@@ -1,6 +1,7 @@
 package com.github.lanchiang.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 /**
  * @author Lan Jiang
@@ -9,8 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NobleTilePojo {
 
     @JsonProperty("gemstone-card-cost")
+    @Getter
     private GemstoneCostPojo gemstoneCostPojo;
 
     @JsonProperty("prestige")
+    @Getter
     private int prestige;
 }
