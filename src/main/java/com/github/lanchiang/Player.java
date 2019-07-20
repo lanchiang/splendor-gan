@@ -19,19 +19,30 @@ public class Player {
      */
     private int prestigePoints = 0;
 
-    public void acquireGemstones() {
+    /**
+     *
+     */
+    synchronized public void acquireGemstones() {
+    }
+
+    /**
+     *
+     */
+    synchronized public void acquireDevelopmentCard() {
 
     }
 
-    public void acquireDevelopmentCard() {
+    /**
+     *
+     */
+    synchronized public void reserveDevelopmentCard() {
 
     }
 
-    public void reserveDevelopmentCard() {
-
-    }
-
-    public void acquireNobleTile() {
+    /**
+     *
+     */
+    synchronized public void acquireNobleTile() {
 
     }
 }

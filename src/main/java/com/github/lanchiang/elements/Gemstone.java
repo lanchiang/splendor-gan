@@ -31,31 +31,3 @@ public enum Gemstone {
         }
     }
 }
-
-//abstract public class Gemstone {
-//
-//    public static Gemstone createGemstoneInstance(String name) {
-//        switch (name) {
-//            case "emerald":
-//                return new Emerald();
-//            case "diamond":
-//                return new Diamond();
-//            case "sapphire":
-//                return new Sapphire();
-//            case "onyx":
-//                return new Onyx();
-//            case "ruby":
-//                return new Ruby();
-//            default:
-//                throw new IllegalArgumentException("Gemstone name is not correct in the resource file");
-//        }
-//    }
-//}
-//
-//class Emerald extends Gemstone {}
-//class Diamond extends Gemstone {}
-//class Sapphire extends Gemstone {}
-//class Onyx extends Gemstone {}
-//class Ruby extends Gemstone {}
-//class GoldJoker extends Gemstone {}
-//
