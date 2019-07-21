@@ -1,6 +1,7 @@
 package com.github.lanchiang.game;
 
 import com.github.lanchiang.components.Gemstone;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class Player {
     /**
      * Current prestige points owned by this player.
      */
+    @Getter
     private int prestigePoints = 0;
 
     public Player() {

@@ -17,8 +17,9 @@ public class Game {
     /**
      * Number of players in this game. It can be only between 2 and 4, inclusively.
      */
-    private int numOfPlayers;
+    private final int numOfPlayers;
 
+    @Getter
     private Player[] players;
 
     @Getter
@@ -33,6 +34,8 @@ public class Game {
     public Game(int numOfPlayers) {
         Validate.inclusiveBetween(2, 4, numOfPlayers);
         this.numOfPlayers = numOfPlayers;
+
+        initGameElements();
     }
 
     /**
