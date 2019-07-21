@@ -5,6 +5,7 @@ import com.github.lanchiang.elements.DevelopmentCardPool;
 import com.github.lanchiang.elements.GemstonePool;
 import com.github.lanchiang.elements.NobleTiles;
 import lombok.Getter;
+import org.apache.commons.lang3.Validate;
 
 /**
  * This class represent one game.
@@ -14,6 +15,9 @@ import lombok.Getter;
  */
 public class Game {
 
+    /**
+     * Number of players in this game. It can be only between 2 and 4, inclusively.
+     */
     private int numOfPlayers;
 
     private Player[] players;
@@ -28,11 +32,21 @@ public class Game {
     private GemstonePool gemstonePool;
 
     public Game(int numOfPlayers) {
+        Validate.inclusiveBetween(2, 4, numOfPlayers);
         this.numOfPlayers = numOfPlayers;
+    }
+
+    /**
+     * Run the game.
+     */
+    public void run() {
+
     }
 
     private void initGameElements() {
         developmentCardPool = DevelopmentCardPool.getInstance();
+        this.developmentCardPool.initDisplay();
+
         nobleTiles = NobleTiles.getInstance();
         gemstonePool = GemstonePool.getInstance(numOfPlayers);
 
@@ -40,7 +54,11 @@ public class Game {
     }
 
     /**
-     * @return true if the game should stop, i.e., a player has reached 15 prestige points.
+     * The game finishes if one of the following conditions are fulfilled:
+     * 1) a player has reached 15 prestige points;
+     * 2) all the cards are obtained by players.
+     *
+     * @return true if a termination condition is fulfilled.
      */
     private boolean shouldFinish() {
         return false;

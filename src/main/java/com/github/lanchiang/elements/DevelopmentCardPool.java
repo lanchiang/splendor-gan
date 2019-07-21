@@ -4,6 +4,7 @@ import com.github.lanchiang.pojo.DevelopmentCardPojo;
 import com.github.lanchiang.pojo.DevelopmentCardPoolPojo;
 import com.github.lanchiang.pojo.XmlDeserializer;
 import lombok.Getter;
+import org.apache.commons.lang3.Validate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,5 +64,17 @@ public class DevelopmentCardPool {
                 displayedCardsByLevel.get(level.getKey()).add(unrevealedCardsByLevel.get(level.getKey()).poll());
             }
         });
+    }
+
+    /**
+     * After a player acquire a card from the development card pool, display a new one from this level if possible, otherwise do not draw anything.
+     * @param level the level where the new card should be displayed.
+     */
+    public void displayNewCard(int level) {
+        DevelopmentCard developmentCard = unrevealedCardsByLevel.get(level).poll();
+        if (developmentCard != null) {
+            Validate.isTrue(displayedCardsByLevel.get(level).size() == 4); // only at most four cards from each level can be displayed.
+            displayedCardsByLevel.get(level).add(developmentCard);
+        }
     }
 }
