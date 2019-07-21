@@ -15,7 +15,7 @@ public class Conclusion {
     @Getter
     private Player[] players;
 
-    public Conclusion(Game game) {
+    protected Conclusion(Game game) {
         players = game.getPlayers();
     }
 }

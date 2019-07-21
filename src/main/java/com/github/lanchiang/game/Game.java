@@ -31,6 +31,11 @@ public class Game {
     @Getter
     private GemstonePool gemstonePool;
 
+    /**
+     * the token indicates which player is executing his/her round now.
+     */
+    private int token = 0;
+
     public Game(int numOfPlayers) {
         Validate.inclusiveBetween(2, 4, numOfPlayers);
         this.numOfPlayers = numOfPlayers;
@@ -42,12 +47,21 @@ public class Game {
      * Run the game.
      */
     public void run() {
+        while (!shouldFinish()) {
+            // this player executes an action.
+            players[token].perform(this);
 
+            token = (token + 1) % numOfPlayers; // token goes around.
+        }
+
+        // do the finishing logic
+
+        // conclude the game
     }
 
     private void initGameElements() {
         developmentCardPool = DevelopmentCardPool.getInstance();
-        this.developmentCardPool.initDisplay();
+        developmentCardPool.initDisplay();
 
         nobleTiles = NobleTiles.getInstance();
         gemstonePool = GemstonePool.getInstance(numOfPlayers);
