@@ -3,6 +3,7 @@ package com.github.lanchiang.components;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This gemstone pool maintains the unoccupied gemstones.
@@ -56,7 +57,7 @@ public class GemstonePool {
         return instance;
     }
 
-    public void recoverGemstones(List<Gemstone> gemstones) {
+    public void recoverGemstones(Map<Gemstone, Integer> gemstones) {
 
     }
 

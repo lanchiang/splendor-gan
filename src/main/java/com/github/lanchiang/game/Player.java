@@ -5,10 +5,7 @@ import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
 import lombok.Getter;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The player class.
@@ -19,7 +16,7 @@ import java.util.Set;
 public class Player {
 
     @Getter
-    private List<Gemstone> occupiedGemstones;
+    private Map<Gemstone, Integer> occupiedGemstones;
 
     /**
      * Current prestige points owned by this player.
@@ -30,7 +27,14 @@ public class Player {
     private Set<DevelopmentCard> occupiedCards;
 
     public Player() {
-        occupiedGemstones = new LinkedList<>();
+        occupiedGemstones = new HashMap<>();
+        occupiedGemstones.putIfAbsent(Gemstone.Emerald, 0);
+        occupiedGemstones.putIfAbsent(Gemstone.Diamond, 0);
+        occupiedGemstones.putIfAbsent(Gemstone.Sapphire, 0);
+        occupiedGemstones.putIfAbsent(Gemstone.Onyx, 0);
+        occupiedGemstones.putIfAbsent(Gemstone.Ruby, 0);
+        occupiedGemstones.putIfAbsent(Gemstone.GoldJoker, 0);
+
         occupiedCards = new HashSet<>();
     }
 
@@ -77,8 +81,20 @@ public class Player {
      *
      * @return
      */
-    private List<Gemstone> getActualGemstoneCosts(DevelopmentCard card) {
-        List<Gemstone> actualCosts = new LinkedList<>();
+    private Map<Gemstone, Integer> getActualGemstoneCosts(DevelopmentCard card) {
+        Map<Gemstone, Integer> actualCosts = new HashMap<>();
+        int goldJokerConsumption = 0;
+        for (Gemstone gemstone : Gemstone.values()) {
+            int remains = card.getCosts().get(gemstone) - occupiedGemstones.get(gemstone);
+            if (remains < 0) {
+                actualCosts.putIfAbsent(gemstone, occupiedGemstones.get(gemstone));
+                goldJokerConsumption += (0 - remains);
+            } else {
+                actualCosts.putIfAbsent(gemstone, card.getCosts().get(gemstone));
+            }
+        }
+        actualCosts.putIfAbsent(Gemstone.GoldJoker, goldJokerConsumption);
+
         return actualCosts;
     }
 
