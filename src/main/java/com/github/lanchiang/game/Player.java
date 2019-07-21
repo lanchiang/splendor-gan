@@ -1,7 +1,8 @@
-package com.github.lanchiang;
+package com.github.lanchiang.game;
 
-import com.github.lanchiang.elements.Gemstone;
+import com.github.lanchiang.components.Gemstone;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,6 +19,24 @@ public class Player {
      * Current prestige points owned by this player.
      */
     private int prestigePoints = 0;
+
+    public Player() {
+        occupied = new HashMap<>();
+        occupied.putIfAbsent(Gemstone.Emerald, 0);
+        occupied.putIfAbsent(Gemstone.Diamond, 0);
+        occupied.putIfAbsent(Gemstone.Sapphire, 0);
+        occupied.putIfAbsent(Gemstone.Onyx, 0);
+        occupied.putIfAbsent(Gemstone.Ruby, 0);
+    }
+
+    /**
+     * The player performs an action according to the current game situation.
+     *
+     * @param game the game instance
+     */
+    public void perform(Game game) {
+
+    }
 
     /**
      *

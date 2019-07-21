@@ -1,6 +1,6 @@
 package com.github.lanchiang.pojo;
 
-import com.github.lanchiang.elements.NobleTiles;
+import com.github.lanchiang.components.NobleTiles;
 import org.junit.Test;
 
 /**

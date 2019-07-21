@@ -1,4 +1,4 @@
-package com.github.lanchiang.elements;
+package com.github.lanchiang.components;
 
 /**
  * A resource is a gemstone that is fetched by a player and used as the currency to by the cards.

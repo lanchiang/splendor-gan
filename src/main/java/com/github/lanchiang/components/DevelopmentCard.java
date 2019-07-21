@@ -1,6 +1,7 @@
-package com.github.lanchiang.elements;
+package com.github.lanchiang.components;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,20 +13,26 @@ import java.util.Map;
 public class DevelopmentCard {
 
     @Getter
-    private int cardLevel;
+    private final int cardLevel;
 
     @Getter
-    private Map<Gemstone, Integer> costs;
+    private final Map<Gemstone, Integer> costs;
 
     /**
      * The prestige points provided by this development card.
      */
-    @Getter private int prestigePoints;
+    @Getter private final int prestigePoints;
 
     /**
-     * The benefit given by owning this {@link Gemstone}
+     * The benefit given by owning this {@link Gemstone}.
      */
-    @Getter private Gemstone benefit;
+    @Getter private final Gemstone benefit;
+
+    /**
+     * The state of this card.
+     */
+    @Getter @Setter
+    private CardState state;
 
     public DevelopmentCard(int cardLevel, int prestigePoints, Gemstone benefit,
                            int emeraldCost, int diamondCost, int sapphireCost, int onyxCost, int rubyCost) {
@@ -39,5 +46,27 @@ public class DevelopmentCard {
         this.costs.putIfAbsent(Gemstone.Sapphire, sapphireCost);
         this.costs.putIfAbsent(Gemstone.Onyx, onyxCost);
         this.costs.putIfAbsent(Gemstone.Ruby, rubyCost);
+
+        this.state = CardState.Undisplayed;
+    }
+
+    /**
+     * The current state of a development card.
+     */
+    public enum CardState {
+        /**
+         * The card is still face-down on the board.
+         */
+        Undisplayed,
+
+        /**
+         * The cards is face-up on the board
+         */
+        Displayed,
+
+        /**
+         * The card is in a player's hands.
+         */
+        Inhand,
     }
 }

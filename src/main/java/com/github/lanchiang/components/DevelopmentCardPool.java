@@ -1,4 +1,4 @@
-package com.github.lanchiang.elements;
+package com.github.lanchiang.components;
 
 import com.github.lanchiang.pojo.DevelopmentCardPojo;
 import com.github.lanchiang.pojo.DevelopmentCardPoolPojo;
@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * The pool of all development cards transitioned in a game. It includes cards on players' hands, card displayed on the board, and cards still undisplayed.
+ *
  * @author Lan Jiang
  * @since 2019-07-16
  */
@@ -18,8 +20,14 @@ public class DevelopmentCardPool {
     @Getter
     private Collection<DevelopmentCard> pool;
 
+    /**
+     * The face-up cards on the board, by their levels.
+     */
     private Map<Integer, List<DevelopmentCard>> displayedCardsByLevel;
 
+    /**
+     * The face-down cards on the board.
+     */
     private Map<Integer, Queue<DevelopmentCard>> unrevealedCardsByLevel;
 
     private static DevelopmentCardPool instance;
@@ -36,7 +44,9 @@ public class DevelopmentCardPool {
                         developmentCardPojo.getGemstoneCostPojo().getDiamond(),
                         developmentCardPojo.getGemstoneCostPojo().getSapphire(),
                         developmentCardPojo.getGemstoneCostPojo().getOnyx(),
-                        developmentCardPojo.getGemstoneCostPojo().getRuby())).collect(Collectors.toSet());
+                        developmentCardPojo.getGemstoneCostPojo().getRuby()
+                )
+        ).collect(Collectors.toSet());
 
         Map<Integer, List<DevelopmentCard>> unrevealedCardListByLevel = pool.stream().collect(Collectors.groupingBy(DevelopmentCard::getCardLevel));
         unrevealedCardsByLevel = new HashMap<>();
@@ -58,10 +68,13 @@ public class DevelopmentCardPool {
      * Displaying the first four cards from each of the levels.
      */
     public void initDisplay() {
-        unrevealedCardsByLevel.entrySet().forEach(level -> {
-            displayedCardsByLevel.putIfAbsent(level.getKey(), new LinkedList<>());
+        unrevealedCardsByLevel.forEach((key, value) -> {
+            displayedCardsByLevel.putIfAbsent(key, new LinkedList<>());
             for (int i = 0; i < 4; i++) {
-                displayedCardsByLevel.get(level.getKey()).add(unrevealedCardsByLevel.get(level.getKey()).poll());
+                DevelopmentCard polledCard = unrevealedCardsByLevel.get(key).poll();
+                assert polledCard != null;
+                polledCard.setState(DevelopmentCard.CardState.Displayed);
+                displayedCardsByLevel.get(key).add(polledCard);
             }
         });
     }

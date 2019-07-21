@@ -1,6 +1,6 @@
 package com.github.lanchiang.pojo;
 
-import com.github.lanchiang.elements.DevelopmentCardPool;
+import com.github.lanchiang.components.DevelopmentCardPool;
 import org.junit.Test;
 
 /**

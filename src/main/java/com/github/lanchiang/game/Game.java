@@ -1,9 +1,8 @@
 package com.github.lanchiang.game;
 
-import com.github.lanchiang.Player;
-import com.github.lanchiang.elements.DevelopmentCardPool;
-import com.github.lanchiang.elements.GemstonePool;
-import com.github.lanchiang.elements.NobleTiles;
+import com.github.lanchiang.components.DevelopmentCardPool;
+import com.github.lanchiang.components.GemstonePool;
+import com.github.lanchiang.components.NobleTiles;
 import lombok.Getter;
 import org.apache.commons.lang3.Validate;
 

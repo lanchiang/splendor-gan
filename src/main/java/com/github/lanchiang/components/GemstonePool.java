@@ -1,4 +1,4 @@
-package com.github.lanchiang.elements;
+package com.github.lanchiang.components;
 
 import lombok.Getter;
 

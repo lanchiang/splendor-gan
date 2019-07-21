@@ -1,4 +1,4 @@
-package com.github.lanchiang.elements;
+package com.github.lanchiang.components;
 
 import com.github.lanchiang.pojo.NobleTilePoolPojo;
 import com.github.lanchiang.pojo.XmlDeserializer;
