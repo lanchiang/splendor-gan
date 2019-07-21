@@ -23,11 +23,13 @@ public class DevelopmentCardPool {
     /**
      * The face-up cards on the board, by their levels.
      */
+    @Getter
     private Map<Integer, List<DevelopmentCard>> displayedCardsByLevel;
 
     /**
      * The face-down cards on the board.
      */
+    @Getter
     private Map<Integer, Queue<DevelopmentCard>> unrevealedCardsByLevel;
 
     private static DevelopmentCardPool instance;

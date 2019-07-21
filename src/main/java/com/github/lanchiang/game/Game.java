@@ -1,10 +1,14 @@
 package com.github.lanchiang.game;
 
+import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCardPool;
 import com.github.lanchiang.components.GemstonePool;
 import com.github.lanchiang.components.NobleTiles;
 import lombok.Getter;
 import org.apache.commons.lang3.Validate;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class represent one game.
@@ -32,6 +36,12 @@ public class Game {
     private GemstonePool gemstonePool;
 
     /**
+     * Player action records of this game.
+     */
+    @Getter
+    private List<PlayerAction> playerActions;
+
+    /**
      * the token indicates which player is executing his/her round now.
      */
     private int token = 0;
@@ -39,6 +49,8 @@ public class Game {
     public Game(int numOfPlayers) {
         Validate.inclusiveBetween(2, 4, numOfPlayers);
         this.numOfPlayers = numOfPlayers;
+
+        playerActions = new LinkedList<>();
 
         initGameElements();
     }
@@ -67,6 +79,10 @@ public class Game {
         gemstonePool = GemstonePool.getInstance(numOfPlayers);
 
         players = new Player[numOfPlayers];
+    }
+
+    public Player getCurrentPlayer() {
+        return players[token];
     }
 
     /**

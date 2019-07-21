@@ -2,6 +2,8 @@ package com.github.lanchiang.components;
 
 import lombok.Getter;
 
+import java.util.List;
+
 /**
  * This gemstone pool maintains the unoccupied gemstones.
  *
@@ -52,6 +54,10 @@ public class GemstonePool {
             instance = new GemstonePool(playerNumber);
         }
         return instance;
+    }
+
+    public void recoverGemstones(List<Gemstone> gemstones) {
+
     }
 
     private void initPool(int numOfBasicGemstone) {

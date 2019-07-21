@@ -1,11 +1,14 @@
 package com.github.lanchiang.game;
 
+import com.github.lanchiang.actions.PlayerAction;
+import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
 import lombok.Getter;
-import org.apache.commons.lang3.Validate;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The player class.
@@ -15,7 +18,8 @@ import java.util.List;
  */
 public class Player {
 
-    private List<Gemstone> occupied;
+    @Getter
+    private List<Gemstone> occupiedGemstones;
 
     /**
      * Current prestige points owned by this player.
@@ -23,8 +27,11 @@ public class Player {
     @Getter
     private int prestigePoints = 0;
 
+    private Set<DevelopmentCard> occupiedCards;
+
     public Player() {
-        occupied = new LinkedList<>();
+        occupiedGemstones = new LinkedList<>();
+        occupiedCards = new HashSet<>();
     }
 
     /**
@@ -42,7 +49,37 @@ public class Player {
      * @param game the game instance
      */
     public void perform(Game game) {
+        PlayerAction action = null;
 
+        game.getPlayerActions().add(action);
+    }
+
+    /**
+     * Obtain a development card from the board. This process includes three steps: add the card to the 'hand', recalculate the prestige points,
+     * and recover the gemstones in the gemstone pool.
+     *
+     * @param card the card to be obtained.
+     * @param game the game instance used to recover the gemstone pool.
+     */
+    public void obtainDevelopmentCard(DevelopmentCard card, Game game) {
+        occupiedCards.add(card);
+        card.setState(DevelopmentCard.CardState.Inhand);
+
+        // consume the gemstones.
+        prestigePoints += card.getPrestigePoints();
+
+        // recover the gemstones
+        game.getGemstonePool().recoverGemstones(getActualGemstoneCosts(card));
+    }
+
+    /**
+     * Actual gemstone cost is the number of on-paper cost subtracts the number of owned gemstone cards.
+     *
+     * @return
+     */
+    private List<Gemstone> getActualGemstoneCosts(DevelopmentCard card) {
+        List<Gemstone> actualCosts = new LinkedList<>();
+        return actualCosts;
     }
 
     /**
