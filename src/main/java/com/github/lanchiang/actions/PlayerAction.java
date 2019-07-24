@@ -1,6 +1,7 @@
 package com.github.lanchiang.actions;
 
-import com.github.lanchiang.game.Game;
+import com.github.lanchiang.game.Player;
+import lombok.Getter;
 
 /**
  * Abstract class for all the player actions.
@@ -10,5 +11,10 @@ import com.github.lanchiang.game.Game;
  */
 abstract public class PlayerAction {
 
-    abstract public void execute(Game game);
+    /**
+     * The player who executes this action.
+     */
+    protected Player player;
+
+    abstract public void execute();
 }

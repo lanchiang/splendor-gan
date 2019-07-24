@@ -3,6 +3,7 @@ package com.github.lanchiang.game;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
+import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
 import java.util.*;
@@ -24,9 +25,19 @@ public class Player {
     @Getter
     private int prestigePoints = 0;
 
+    /**
+     * The development cards this player has bought so far.
+     */
+    @Getter
     private Set<DevelopmentCard> occupiedCards;
 
-    public Player() {
+    /**
+     * The game that this player attends.
+     */
+    @Getter
+    private Game game;
+
+    public Player(Game game) {
         occupiedGemstones = new HashMap<>();
         occupiedGemstones.putIfAbsent(Gemstone.Emerald, 0);
         occupiedGemstones.putIfAbsent(Gemstone.Diamond, 0);
@@ -36,6 +47,8 @@ public class Player {
         occupiedGemstones.putIfAbsent(Gemstone.GoldJoker, 0);
 
         occupiedCards = new HashSet<>();
+
+        this.game = game;
     }
 
     /**
@@ -50,11 +63,11 @@ public class Player {
      * EXTRA: at the end of a player's turn, he/she may get a noble tile if having enough gemstone cards for it.
      *      A player may get only one noble tile per turn, even if multiple ones are available for him/her. (Note: this is not considered as an action)
      *
-     * @param game the game instance
      */
-    public void perform(Game game) {
+    public void perform() {
         PlayerAction action = null;
 
+        action.execute();
         game.getPlayerActions().add(action);
     }
 
@@ -63,17 +76,18 @@ public class Player {
      * and recover the gemstones in the gemstone pool.
      *
      * @param card the card to be obtained.
-     * @param game the game instance used to recover the gemstone pool.
      */
-    public void obtainDevelopmentCard(DevelopmentCard card, Game game) {
+    public void obtainDevelopmentCard(DevelopmentCard card) {
         occupiedCards.add(card);
         card.setState(DevelopmentCard.CardState.Inhand);
 
         // consume the gemstones.
         prestigePoints += card.getPrestigePoints();
 
-        // recover the gemstones
-        game.getGemstonePool().recoverGemstones(getActualGemstoneCosts(card));
+        // rebalance the gemstones
+        GemstoneCostMessage actualCost = getActualGemstoneCosts(card);
+        this.getOccupiedGemstones().entrySet().forEach(entry -> entry.setValue(entry.getValue() - actualCost.getCost(entry.getKey())));
+        game.getGemstonePool().recoverGemstones(actualCost);
     }
 
     /**
@@ -81,7 +95,7 @@ public class Player {
      *
      * @return
      */
-    private Map<Gemstone, Integer> getActualGemstoneCosts(DevelopmentCard card) {
+    private GemstoneCostMessage getActualGemstoneCosts(DevelopmentCard card) {
         Map<Gemstone, Integer> actualCosts = new HashMap<>();
         int goldJokerConsumption = 0;
         for (Gemstone gemstone : Gemstone.values()) {
@@ -95,7 +109,14 @@ public class Player {
         }
         actualCosts.putIfAbsent(Gemstone.GoldJoker, goldJokerConsumption);
 
-        return actualCosts;
+        return new GemstoneCostMessage(
+                actualCosts.get(Gemstone.Emerald),
+                actualCosts.get(Gemstone.Diamond),
+                actualCosts.get(Gemstone.Sapphire),
+                actualCosts.get(Gemstone.Onyx),
+                actualCosts.get(Gemstone.Ruby),
+                actualCosts.get(Gemstone.GoldJoker)
+        );
     }
 
     /**

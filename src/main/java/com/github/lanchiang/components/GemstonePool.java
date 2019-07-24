@@ -1,5 +1,6 @@
 package com.github.lanchiang.components;
 
+import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
 import java.util.List;
@@ -57,8 +58,7 @@ public class GemstonePool {
         return instance;
     }
 
-    public void recoverGemstones(Map<Gemstone, Integer> gemstones) {
-
+    public void recoverGemstones(GemstoneCostMessage gemstones) {
     }
 
     private void initPool(int numOfBasicGemstone) {
