@@ -1,7 +1,7 @@
 package com.github.lanchiang.actions;
 
+import com.github.lanchiang.exceptions.ActionNotExecutableException;
 import com.github.lanchiang.game.Player;
-import lombok.Getter;
 
 /**
  * Abstract class for all the player actions.
@@ -16,5 +16,9 @@ abstract public class PlayerAction {
      */
     protected Player player;
 
-    abstract public void execute();
+    public PlayerAction(Player player) {
+        this.player = player;
+    }
+
+    abstract public void execute() throws ActionNotExecutableException;
 }

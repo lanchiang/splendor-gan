@@ -2,6 +2,8 @@ package com.github.lanchiang.actions;
 
 import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
+import com.github.lanchiang.exceptions.ActionNotExecutableException;
+import com.github.lanchiang.game.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,14 +14,22 @@ import java.util.stream.Collectors;
  */
 public class ObtainDevelopmentCard extends PlayerAction {
 
+    public ObtainDevelopmentCard(Player player) {
+        super(player);
+    }
+
     @Override
-    public void execute() {
+    public void execute() throws ActionNotExecutableException {
         Map<Integer, List<DevelopmentCard>> displayedCards = player.getGame().getDevelopmentCardPool().getDisplayedCardsByLevel();
 
         // Todo: select a card. Now randomly select a card.
         // keep only affordable cards.
         List<DevelopmentCard> affordableCards = displayedCards.values().stream().flatMap(List::stream).filter(this::affordable).collect(Collectors.toList());
-        DevelopmentCard obtainedCard = affordableCards.get(new Random(System.currentTimeMillis()).nextInt(affordableCards.size()));
+        if (affordableCards.isEmpty()) {
+            throw new ActionNotExecutableException("This action cannot be executed."); // Wrap a runtime exception, called action not executable exception.
+        }
+        Collections.shuffle(affordableCards);
+        DevelopmentCard obtainedCard = affordableCards.get(0);
 
         // add the card to the player's hand.
         player.obtainDevelopmentCard(obtainedCard);
@@ -42,7 +52,8 @@ public class ObtainDevelopmentCard extends PlayerAction {
         int remainGoldJoker = player.getOccupiedGemstones().get(Gemstone.GoldJoker);
         while (costIterator.hasNext()) {
             Map.Entry<Gemstone, Integer> nextGemstone = costIterator.next();
-            int owned = gemstones.get(nextGemstone.getKey()) + cardAmountByGemstone.get(nextGemstone.getKey()).size();
+            int owned = gemstones.get(nextGemstone.getKey()) + cardAmountByGemstone.getOrDefault(nextGemstone.getKey(), new LinkedList<>()).size();
+           ;
             // if not enough
             if (nextGemstone.getValue() > owned) {
                 remainGoldJoker -= (nextGemstone.getValue() - owned);

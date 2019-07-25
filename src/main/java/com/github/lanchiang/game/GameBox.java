@@ -1,6 +1,7 @@
 package com.github.lanchiang.game;
 
 import com.github.lanchiang.conclusions.ConclusionBoard;
+import com.github.lanchiang.exceptions.ActionNotExecutableException;
 
 /**
  * A Game box contains all the game records produced during its execution.
@@ -16,9 +17,9 @@ public class GameBox {
         conclusionBoard = new ConclusionBoard();
     }
 
-    public void run() {
+    public void run(int numOfPlayer) throws ActionNotExecutableException {
         while (true) {
-            Game game = new Game(2);
+            Game game = new Game(numOfPlayer);
             game.run();
             conclusionBoard.concludeGame(game);
         }
@@ -26,6 +27,10 @@ public class GameBox {
 
     public static void main(String[] args) {
         GameBox gameBox = new GameBox();
-        gameBox.run();
+        try {
+            gameBox.run(2);
+        } catch (ActionNotExecutableException e) {
+            e.printStackTrace();
+        }
     }
 }

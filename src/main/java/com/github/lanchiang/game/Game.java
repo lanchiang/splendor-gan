@@ -5,9 +5,11 @@ import com.github.lanchiang.components.DevelopmentCardPool;
 import com.github.lanchiang.components.GemstonePool;
 import com.github.lanchiang.components.NobleTile;
 import com.github.lanchiang.components.NobleTiles;
+import com.github.lanchiang.exceptions.ActionNotExecutableException;
 import lombok.Getter;
 import org.apache.commons.lang3.Validate;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +62,7 @@ public class Game {
     /**
      * Run the game.
      */
-    public void run() {
+    public void run() throws ActionNotExecutableException {
         while (!shouldFinish()) {
             // this player executes an action.
             players[token].perform();
@@ -81,6 +83,9 @@ public class Game {
         gemstonePool = GemstonePool.getInstance(numOfPlayers);
 
         players = new Player[numOfPlayers];
+        for (int i=0; i< players.length; i++) {
+            players[i] = new Player(this);
+        }
     }
 
     private Collection<NobleTile> displayNobleTiles() {

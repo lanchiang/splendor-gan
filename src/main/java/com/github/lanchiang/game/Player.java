@@ -1,9 +1,11 @@
 package com.github.lanchiang.game;
 
+import com.github.lanchiang.actions.ObtainDevelopmentCard;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
 import com.github.lanchiang.components.NobleTile;
+import com.github.lanchiang.exceptions.ActionNotExecutableException;
 import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
@@ -52,6 +54,8 @@ public class Player {
 
         occupiedCards = new HashSet<>();
 
+        occupiedNobleTiles = new HashSet<>();
+
         this.game = game;
     }
 
@@ -68,8 +72,8 @@ public class Player {
      *      A player may get only one noble tile per turn, even if multiple ones are available for him/her. (Note: this is not considered as an action)
      *
      */
-    public void perform() {
-        PlayerAction action = null;
+    public void perform() throws ActionNotExecutableException {
+        PlayerAction action = new ObtainDevelopmentCard(this);
 
         action.execute();
         game.getPlayerActions().add(action);
