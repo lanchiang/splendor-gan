@@ -3,10 +3,12 @@ package com.github.lanchiang.game;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCardPool;
 import com.github.lanchiang.components.GemstonePool;
+import com.github.lanchiang.components.NobleTile;
 import com.github.lanchiang.components.NobleTiles;
 import lombok.Getter;
 import org.apache.commons.lang3.Validate;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class Game {
     private Player[] players;
 
     @Getter
-    private NobleTiles nobleTiles;
+    private Collection<NobleTile> displayedNobleTiles;
 
     @Getter
     private DevelopmentCardPool developmentCardPool;
@@ -61,7 +63,7 @@ public class Game {
     public void run() {
         while (!shouldFinish()) {
             // this player executes an action.
-            players[token].perform(this);
+            players[token].perform();
 
             token = (token + 1) % numOfPlayers; // token goes around.
         }
@@ -75,10 +77,22 @@ public class Game {
         developmentCardPool = DevelopmentCardPool.getInstance();
         developmentCardPool.initDisplay();
 
-        nobleTiles = NobleTiles.getInstance();
+        displayedNobleTiles = displayNobleTiles();
         gemstonePool = GemstonePool.getInstance(numOfPlayers);
 
         players = new Player[numOfPlayers];
+    }
+
+    private Collection<NobleTile> displayNobleTiles() {
+        int numOfNobleTiles;
+        if (numOfPlayers == 2) {
+            numOfNobleTiles = 3;
+        } else if (numOfPlayers == 3 || numOfPlayers == 4) {
+            numOfNobleTiles = 4;
+        } else {
+            throw new IllegalArgumentException("Number of players is incorrect.");
+        }
+        return NobleTiles.getInstance().takeRandom(numOfNobleTiles);
     }
 
     public Player getCurrentPlayer() {

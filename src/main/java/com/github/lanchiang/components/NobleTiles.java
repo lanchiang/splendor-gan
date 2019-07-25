@@ -4,10 +4,12 @@ import com.github.lanchiang.pojo.NobleTilePoolPojo;
 import com.github.lanchiang.pojo.XmlDeserializer;
 import lombok.Getter;
 
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * The collection of noble tiles.
+ *
  * @author Lan Jiang
  * @since 2019-07-20
  */
@@ -34,5 +36,11 @@ public class NobleTiles {
             instance = new NobleTiles();
         }
         return instance;
+    }
+
+    public Collection<NobleTile> takeRandom(int numOfNobleTiles) {
+        List<NobleTile> nobleTileList = new LinkedList<>(nobleTiles);
+        Collections.shuffle(nobleTileList);
+        return new HashSet<>(nobleTileList.subList(0, numOfNobleTiles));
     }
 }

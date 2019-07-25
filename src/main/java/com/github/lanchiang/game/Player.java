@@ -3,6 +3,7 @@ package com.github.lanchiang.game;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
+import com.github.lanchiang.components.NobleTile;
 import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
@@ -30,6 +31,9 @@ public class Player {
      */
     @Getter
     private Set<DevelopmentCard> occupiedCards;
+
+    @Getter
+    private Set<NobleTile> occupiedNobleTiles;
 
     /**
      * The game that this player attends.
@@ -69,6 +73,7 @@ public class Player {
 
         action.execute();
         game.getPlayerActions().add(action);
+        tryObtainNobleTile();
     }
 
     /**
@@ -120,9 +125,17 @@ public class Player {
     }
 
     /**
-     * EXTRA: obtain a noble tile.
+     * EXTRA: check if it's possible to obtain a noble tile. When yes, take one.
      */
-    synchronized public void obtainNobleTile() {
+    synchronized public void tryObtainNobleTile() {
+        Optional<NobleTile> firstPossible = game.getDisplayedNobleTiles().stream().filter(this::nobleTileAffordable).sorted().findFirst();
+        if (firstPossible.isPresent()) {
+            this.occupiedNobleTiles.add(firstPossible.get());
+            this.prestigePoints += firstPossible.get().getPrestigePoints();
+        }
+    }
 
+    public boolean nobleTileAffordable(NobleTile nobleTile) {
+        return nobleTile.getCosts().entrySet().stream().anyMatch(entry -> occupiedGemstones.get(entry.getKey()) < entry.getValue());
     }
 }
