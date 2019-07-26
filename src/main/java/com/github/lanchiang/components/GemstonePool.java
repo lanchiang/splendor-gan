@@ -3,9 +3,6 @@ package com.github.lanchiang.components;
 import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * This gemstone pool maintains the unoccupied gemstones.
  *
@@ -31,6 +28,9 @@ public class GemstonePool {
 
     @Getter
     private int goldJokers;
+
+    @Getter
+    private int maxNumNormalGemstone;
 
     private static GemstonePool instance;
 
@@ -61,11 +61,18 @@ public class GemstonePool {
     public void recoverGemstones(GemstoneCostMessage gemstones) {
     }
 
+    /**
+     * Initialize the gemstone pool for the game.
+     *
+     * @param numOfBasicGemstone
+     */
     private void initPool(int numOfBasicGemstone) {
         emeralds = numOfBasicGemstone;
         diamonds = numOfBasicGemstone;
         sapphires = numOfBasicGemstone;
         onyxes = numOfBasicGemstone;
         rubies = numOfBasicGemstone;
+
+        maxNumNormalGemstone = numOfBasicGemstone;
     }
 }

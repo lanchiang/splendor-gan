@@ -1,6 +1,7 @@
 package com.github.lanchiang.game;
 
 import com.github.lanchiang.actions.ObtainDevelopmentCard;
+import com.github.lanchiang.actions.ObtainGemstones;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCard;
 import com.github.lanchiang.components.Gemstone;
@@ -141,5 +142,13 @@ public class Player {
 
     public boolean nobleTileAffordable(NobleTile nobleTile) {
         return nobleTile.getCosts().entrySet().stream().anyMatch(entry -> occupiedGemstones.get(entry.getKey()) < entry.getValue());
+    }
+
+    /**
+     * Obtain a list of gemstones. Add them to the player's occupiedGemstone map.
+     * @param fetch
+     */
+    public void obtainGemstones(ObtainGemstones.Fetch fetch) {
+        occupiedGemstones.keySet().forEach(gemstone -> occupiedGemstones.put(gemstone, occupiedGemstones.get(gemstone) + fetch.getCost(gemstone)));
     }
 }
