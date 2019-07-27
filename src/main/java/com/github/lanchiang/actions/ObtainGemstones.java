@@ -32,10 +32,13 @@ public class ObtainGemstones extends PlayerAction {
 
         // Todo: select and take a random fetch.
         Collections.shuffle(fetchCandidates);
-        GemstoneCostMessage fetch = fetchCandidates.get(0);
+        GemstoneCostMessage fetch = fetchCandidates.get(0); // Todo: now thorw an exception.
 
         // add the gemstone chips to the player's hand
         player.obtainGemstones(fetch);
+
+        // remove the obtained gemstone chips from the pool.
+        player.getGame().getGemstonePool().removeGemstone(fetch);
     }
 
     /**
@@ -135,7 +138,7 @@ public class ObtainGemstones extends PlayerAction {
     private static Set<List<Gemstone>> combination(List<Gemstone> available, int size) {
         Set<List<Gemstone>> result = new HashSet<>();
 
-        for (int i = 1; i < Math.pow(2, available.size()) - 1; i++) {
+        for (int i = 1; i <= Math.pow(2, available.size()) - 1; i++) {
             List<Gemstone> eligibleCollections = new LinkedList<>();
             // 依次将数字 i 与 2^n 按位与，判断第 n 位是否为 1
             for (int j = 0; j < available.size(); j++) {

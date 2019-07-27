@@ -11,6 +11,7 @@ import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The player class.
@@ -134,7 +135,7 @@ public class Player {
      * EXTRA: check if it's possible to obtain a noble tile. When yes, take one.
      */
     synchronized public void tryObtainNobleTile() {
-        Optional<NobleTile> firstPossible = game.getDisplayedNobleTiles().stream().filter(this::nobleTileAffordable).sorted().findFirst();
+        Optional<NobleTile> firstPossible = game.getDisplayedNobleTiles().stream().filter(this::nobleTileAffordable).findFirst();
         if (firstPossible.isPresent()) {
             this.occupiedNobleTiles.add(firstPossible.get());
             this.prestigePoints += firstPossible.get().getPrestigePoints();
@@ -142,7 +143,10 @@ public class Player {
     }
 
     public boolean nobleTileAffordable(NobleTile nobleTile) {
-        return nobleTile.getCosts().entrySet().stream().anyMatch(entry -> occupiedGemstones.get(entry.getKey()) < entry.getValue());
+        return nobleTile.getCosts().entrySet().stream().noneMatch(entry -> {
+            Map<Gemstone, List<DevelopmentCard>> cardsByGemstone = occupiedCards.stream().collect(Collectors.groupingBy(DevelopmentCard::getBenefit));
+            return cardsByGemstone.getOrDefault(entry.getKey(), Collections.emptyList()).size() < entry.getValue();
+        });
     }
 
     /**

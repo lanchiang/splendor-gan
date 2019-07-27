@@ -61,6 +61,14 @@ public class GemstonePool {
         return instance;
     }
 
+    public void removeGemstone(GemstoneCostMessage gemstones) {
+        emeralds -= gemstones.getEmeralds();
+        diamonds -= gemstones.getDiamonds();
+        sapphires -= gemstones.getSapphires();
+        onyxes -= gemstones.getOnyxes();
+        rubies -= gemstones.getRubies();
+    }
+
     public void recoverGemstones(GemstoneCostMessage gemstones) {
     }
 
