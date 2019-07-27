@@ -74,7 +74,8 @@ public class Player {
      *
      */
     public void perform() throws ActionNotExecutableException {
-        PlayerAction action = new ObtainDevelopmentCard(this);
+//        PlayerAction action = new ObtainDevelopmentCard(this);
+        PlayerAction action = new ObtainGemstones(this);
 
         action.execute();
         game.getPlayerActions().add(action);
@@ -148,7 +149,7 @@ public class Player {
      * Obtain a list of gemstones. Add them to the player's occupiedGemstone map.
      * @param fetch
      */
-    public void obtainGemstones(ObtainGemstones.Fetch fetch) {
+    public void obtainGemstones(GemstoneCostMessage fetch) {
         occupiedGemstones.keySet().forEach(gemstone -> occupiedGemstones.put(gemstone, occupiedGemstones.get(gemstone) + fetch.getCost(gemstone)));
     }
 }

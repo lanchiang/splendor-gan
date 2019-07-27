@@ -15,4 +15,10 @@ public class GameTest {
         GameBox gameBox = new GameBox();
         gameBox.run(2);
     }
+
+    @Test(expected = ActionNotExecutableException.class)
+    public void testAlwaysObtainGemstones() throws ActionNotExecutableException {
+        GameBox gameBox = new GameBox();
+        gameBox.run(2);
+    }
 }

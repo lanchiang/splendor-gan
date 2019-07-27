@@ -3,6 +3,9 @@ package com.github.lanchiang.components;
 import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * This gemstone pool maintains the unoccupied gemstones.
  *
@@ -59,6 +62,26 @@ public class GemstonePool {
     }
 
     public void recoverGemstones(GemstoneCostMessage gemstones) {
+    }
+
+    public List<Gemstone> getAvailableGemstones() {
+        List<Gemstone> available = new LinkedList<>();
+        if (emeralds > 0) {
+            available.add(Gemstone.Emerald);
+        }
+        if (diamonds > 0) {
+            available.add(Gemstone.Diamond);
+        }
+        if (sapphires > 0) {
+            available.add(Gemstone.Sapphire);
+        }
+        if (onyxes > 0) {
+            available.add(Gemstone.Onyx);
+        }
+        if (rubies > 0) {
+            available.add(Gemstone.Ruby);
+        }
+        return available;
     }
 
     /**
