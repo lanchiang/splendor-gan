@@ -36,6 +36,6 @@ public class PlayReservedDevelopmentCard extends PlayerAction {
         player.obtainReservedCard(developmentCard);
 
         // fill the empty slot with a new development card.
-        player.getGame().getDevelopmentCardPool().displayNewCard(developmentCard.getCardLevel());
+        player.getGame().getDevelopmentCardPool().updateDevelopmentCardDeck(developmentCard);
     }
 }

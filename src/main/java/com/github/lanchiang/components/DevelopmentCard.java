@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Lan Jiang
@@ -48,6 +49,22 @@ public class DevelopmentCard {
         this.costs.putIfAbsent(Gemstone.Ruby, rubyCost);
 
         this.state = CardState.Undisplayed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DevelopmentCard that = (DevelopmentCard) o;
+        return cardLevel == that.cardLevel &&
+                prestigePoints == that.prestigePoints &&
+                Objects.equals(costs, that.costs) &&
+                benefit == that.benefit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardLevel, costs, prestigePoints, benefit);
     }
 
     /**

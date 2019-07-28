@@ -81,20 +81,18 @@ public class DevelopmentCardPool {
         });
     }
 
-    public void removeCardFromDisplayed(DevelopmentCard developmentCard) {
-        int level = developmentCard.getCardLevel();
-        displayedCardsByLevel.get(level).remove(developmentCard);
-    }
-
     /**
-     * After a player acquire a card from the development card pool, display a new one from this level if possible, otherwise do not draw anything.
-     * @param level the level where the new card should be displayed.
+     * Update the development card deck on the board by removing the player-obtained card from the displayed card group, and revealing a new card
+     * from the unrevealed pile the same level as that of the obtained card's.
+     * @param obtained the card obtained/purchased by a player
      */
-    public void displayNewCard(int level) {
-        DevelopmentCard developmentCard = unrevealedCardsByLevel.get(level).poll();
-        if (developmentCard != null) {
-            Validate.isTrue(displayedCardsByLevel.get(level).size() == 4); // only at most four cards from each level can be displayed.
-            displayedCardsByLevel.get(level).add(developmentCard);
+    synchronized public void updateDevelopmentCardDeck(DevelopmentCard obtained) {
+        int level = obtained.getCardLevel();
+        displayedCardsByLevel.get(level).remove(obtained);
+
+        DevelopmentCard newCard = unrevealedCardsByLevel.get(level).poll();
+        if (newCard != null) {
+            displayedCardsByLevel.get(level).add(newCard);
         }
     }
 }
