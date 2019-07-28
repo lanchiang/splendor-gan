@@ -2,6 +2,7 @@ package com.github.lanchiang.components;
 
 import com.github.lanchiang.message.GemstoneCostMessage;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;

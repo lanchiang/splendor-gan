@@ -39,6 +39,9 @@ public class Player {
     @Getter
     private Set<NobleTile> occupiedNobleTiles;
 
+    @Getter
+    private Set<DevelopmentCard> reservedCard;
+
     /**
      * The game that this player attends.
      */
@@ -57,6 +60,8 @@ public class Player {
         occupiedCards = new HashSet<>();
 
         occupiedNobleTiles = new HashSet<>();
+
+        reservedCard = new HashSet<>();
 
         this.game = game;
     }
@@ -155,5 +160,13 @@ public class Player {
      */
     public void obtainGemstones(GemstoneCostMessage fetch) {
         occupiedGemstones.keySet().forEach(gemstone -> occupiedGemstones.put(gemstone, occupiedGemstones.get(gemstone) + fetch.getCost(gemstone)));
+    }
+
+    synchronized public void obtainReservedCard(DevelopmentCard card) {
+        reservedCard.add(card);
+        if (game.getGemstonePool().getGoldJokers() > 0) {
+            occupiedGemstones.put(Gemstone.GoldJoker, occupiedGemstones.get(Gemstone.GoldJoker) + 1);
+            game.getGemstonePool().removeGemstone(new GemstoneCostMessage(0, 0, 0, 0, 0, 1));
+        }
     }
 }

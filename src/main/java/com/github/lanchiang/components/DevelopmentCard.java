@@ -68,5 +68,10 @@ public class DevelopmentCard {
          * The card is in a player's hands.
          */
         Inhand,
+
+        /**
+         * The card is reserved by a player.
+         */
+        Reserved;
     }
 }

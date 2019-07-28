@@ -81,6 +81,11 @@ public class DevelopmentCardPool {
         });
     }
 
+    public void removeCardFromDisplayed(DevelopmentCard developmentCard) {
+        int level = developmentCard.getCardLevel();
+        displayedCardsByLevel.get(level).remove(developmentCard);
+    }
+
     /**
      * After a player acquire a card from the development card pool, display a new one from this level if possible, otherwise do not draw anything.
      * @param level the level where the new card should be displayed.
