@@ -4,7 +4,6 @@ import com.github.lanchiang.pojo.DevelopmentCardPojo;
 import com.github.lanchiang.pojo.DevelopmentCardPoolPojo;
 import com.github.lanchiang.pojo.XmlDeserializer;
 import lombok.Getter;
-import org.apache.commons.lang3.Validate;
 
 import java.util.*;
 import java.util.stream.Collectors;
