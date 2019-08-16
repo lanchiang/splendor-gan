@@ -21,4 +21,5 @@ public class GameTest {
         GameBox gameBox = new GameBox();
         gameBox.run(2);
     }
+
 }

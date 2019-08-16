@@ -1,6 +1,5 @@
 package com.github.lanchiang.game;
 
-import com.github.lanchiang.actions.ObtainDevelopmentCard;
 import com.github.lanchiang.actions.ObtainGemstones;
 import com.github.lanchiang.actions.PlayerAction;
 import com.github.lanchiang.components.DevelopmentCard;
@@ -164,6 +163,7 @@ public class Player {
 
     synchronized public void obtainReservedCard(DevelopmentCard card) {
         reservedCard.add(card);
+        card.setState(DevelopmentCard.CardState.Reserved);
         if (game.getGemstonePool().getGoldJokers() > 0) {
             occupiedGemstones.put(Gemstone.GoldJoker, occupiedGemstones.get(Gemstone.GoldJoker) + 1);
             game.getGemstonePool().removeGemstone(new GemstoneCostMessage(0, 0, 0, 0, 0, 1));

@@ -4,7 +4,7 @@ package com.github.lanchiang.exceptions;
  * @author Lan Jiang
  * @since 2019-07-25
  */
-public class ActionNotExecutableException extends Exception {
+public class ActionNotExecutableException extends RuntimeException {
 
     private static final long serialVersionUID = 1523092511328192392L;
 
